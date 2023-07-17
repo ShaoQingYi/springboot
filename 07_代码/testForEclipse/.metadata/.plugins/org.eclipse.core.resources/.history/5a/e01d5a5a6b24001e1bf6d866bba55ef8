@@ -1,0 +1,53 @@
+package com.tc.HAY0001.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tc.HAY0001.entity.User;
+import com.tc.HAY0001.mapper.UserMapper;
+import com.tc.HAY0001.service.UserService;
+
+@Service
+public class  UserServiceImpl implements UserService{
+	//注入UserMapper
+	@Autowired
+	private UserMapper userMapper;
+
+	@Override
+	public List<User> listUser() {
+		//查询所有，调用usermapper中的查询方法listUser
+		return userMapper.listUser();
+		}
+		//新增用户信息
+		@Override
+		public Integer insertUser(User user) {
+			//给时间赋值
+			user.setCreateTime(new Date());
+			//调用usermapper中的新增方法insertUser
+			return userMapper.insertUser(user);
+		}
+		
+		@Override
+		public User queryByUserId(Integer userId) {
+			//调用usermapper中的根据用户id查询用户信息的方法queryByUserId
+			return userMapper.queryByUserId(userId);
+		}
+
+		
+		@Override
+		public Integer updateUser(User user) {
+			//调用usermapper中的修改方法updateUser
+			return userMapper.updateUser(user);
+		}
+		
+		@Override
+		public Integer delete(Integer userId) {
+			//调用usermapper中的删除方法delete
+			return userMapper.delete(userId);
+		}
+
+}
+

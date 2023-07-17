@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: 14926
+Build-Jdk: 17.0.7
+Implementation-Title: tc
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com
+Implementation-URL: http://www.example.com
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.HAY0001.mapper.UserMapper">
+	<resultMap id="result" type="com.tc.HAY0001.entity.User">
+		<!-- 
+			property：是对应的实体属性名称
+			column ：  是对应数据表中的字段名称
+		 -->
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="loginName" column="login_name" />
+		<result property="loginPass" column="login_pass" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	<!-- 查询所有用户信息（建议不要使用select * ） -->
+	<select id="listUser" resultMap="result"
+		parameterType="com.tc.HAY0001.entity.User">
+		SELECT
+		user_id
+		,user_name
+		,login_name
+		,login_pass
+		,create_time
+		FROM user_info
+	</select>
+
+	<!-- 根据用户id查询用户信息(用户id必须传) -->
+	<select id="queryByUserId" resultMap="result"
+		parameterType="com.tc.HAY0001.entity.User">
+		SELECT
+		user_id
+		,user_name
+		,login_name
+		,login_pass
+		FROM user_info where user_id=#{userId}
+	</select>
+
+	<!--新增用户信息  -->
+	<insert id="insertUser" parameterType="com.tc.HAY0001.entity.User">
+		INSERT INTO user_info (
+		user_name
+		, login_name
+		, login_pass
+		, create_time
+		)VALUES(
+		#{userName}
+		,#{loginName}
+		,#{loginPass}
+		,#{createTime}
+		)
+	</insert>
+
+	<!-- 根据用户id修改用户信息 -->
+	<update id="updateUser" parameterType="com.tc.HAY0001.entity.User">
+		UPDATE user_info
+		SET
+		user_name = #{userName}
+		, login_name = #{loginName}
+		, login_pass = #{loginPass}
+		WHERE
+		user_id = #{userId}
+	</update>
+
+	<!-- 根据用户id删除用户信息 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		DELETE FROM user_info WHERE user_id = #{userId}
+	</delete>
+</mapper>
+

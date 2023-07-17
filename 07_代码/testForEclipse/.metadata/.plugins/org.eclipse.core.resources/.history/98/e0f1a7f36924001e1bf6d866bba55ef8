@@ -1,0 +1,5 @@
+package com.tc.HAY0001.entity;
+
+public class User {
+
+}

@@ -1,0 +1,116 @@
+package com.tc.HAY0001.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.tc.HAY0001.entity.User;
+import com.tc.HAY0001.service.UserService;
+
+
+/**
+ * 
+ * @ClassName: UserController
+ * @Description: 用户访问层
+ * @author 唐程
+ * @date 2020-04-02 10:22:42
+ */
+//@RestController 是 @Controller + @ResponseBody
+@Controller
+public class UserController {
+	//日志
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	
+	//@Autowired：实例化UserService类
+	@Autowired
+	private UserService userservice;
+	/**
+	 * 新增用户信息
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("/addUser")
+	public String insert(User user,Model model){
+		
+		//1. 获取表单数据 == user
+		
+		//2. 调用业务方法
+		int rows = userservice.insertUser(user);
+		if(rows > 0){
+			//前端保存的返回值
+			model.addAttribute("msg", "新增成功");
+		}
+		
+		return "success";
+
+		}
+	/**
+	 * 根据用户id查询用户信息
+	 * @param model
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping("/selectUserId")
+	public String queryByUserId(Model model,Integer userId){
+		User user=userservice.queryByUserId(userId);
+		//通过model把user查询到的值传到页面
+		model.addAttribute("u",user );
+		return "update";
+	}
+	/**
+	 * 修改用户信息
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("/update")
+	public String update(User user,Model model){
+		//获取user对象
+		
+		//调用修改方法
+	Integer rows= userservice.updateUser(user);
+	if( rows==null ){
+		//前端保存的返回值
+		model.addAttribute("msg", "修改成功");
+	}
+		return "redirect:/selectUserList";
+		
+	}
+		
+	/**
+	 * 查询所有用户
+	 * @param model 保存页面需要的参数
+	 * @return 返回到的页面
+	 */
+	@RequestMapping("/selectUserList")
+	public String queryUserList(Model model){
+		//1.调用业务方法
+		List<User> list= userservice.listUser();
+		//2.把查询的用户集合信息
+		//通过model的addAttribute方法，把list集合值传给前端页面
+		//model.addAttribute("前端接收的变量名", "结果值");
+		model.addAttribute("userList", list);
+		//3.返回到页面
+		return "userlist";
+	}
+	/**
+	 * 根据用户id删除用户信息
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping("/deleteUser")
+	public String deleteUser(Integer userId){
+		Integer rows = userservice.delete(userId);
+		logger.info("删除,影响行:"+rows);
+		return "redirect:/selectUserList";
+	}
+	
+}
+
+
+

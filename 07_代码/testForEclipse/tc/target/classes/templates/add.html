@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- 引入模板引擎标签 -->
+<html xmls:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="/addUser" method="post">
+	<table border="1">
+		<tr>
+			<input type="text" id="" name="userId" th:value="${u?.userId}"/> 
+			<td>用户名称 : </td>
+			<td><input type="text" id="" name="userName" th:value="${u?.userName}"/> </td>
+		</tr>
+		<tr>
+			<td>登录名称 : </td>
+			<td><input type="text" id="" name="loginName" th:value="${u?.loginName}"/> </td>
+		</tr>
+		<tr>
+			<td>登录密码 : </td>
+			<!--u对象：是通过controller类的toAddUser方法里面model参数传值到页面  -->
+			<td><input type="text" id="" name="loginPass" th:value="${u?.loginPass}"/> </td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<button type="submit">确定</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>

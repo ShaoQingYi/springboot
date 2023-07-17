@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1" style="width: 100%">
+	<tr>
+		<td colspan="7">
+			<button type="button" onclick="addUser()">添加 废止</button>
+		</td>
+		
+		<form action="/moveToAdd" method="post">
+		    <input type="submit" value="添加">
+		</form>
+	</tr>
+	<tr>
+		<td>序列</td>
+		<td>用户ID</td>
+		<td>用户名称</td>
+		<td>登录名称</td>
+		<td>登录密码</td>
+		<td>创建时间</td>
+		<td>操作</td>
+	</tr>
+	<tr th:each="obj,objStat:${userList}">
+		<td th:text="${objStat.index + 1}"></td>
+		<td th:text="${obj.userId}"></td>
+		<td th:text="${obj.userName}">Onions</td>
+		<td th:text="${obj.loginName}"></td>
+		<td th:text="${obj.loginPass}"></td>
+		<td th:text="${#dates.format(obj.createTime,'yyyy-MM-dd')}"></td>		
+		<td colspan="2">
+			<a th:href="@{/selectUserId(userId=${obj.userId})}">编辑</a>
+			<a th:href="@{/deleteUser(userId=${obj.userId})}">删除</a>
+		</td>
+	</tr>
+	
+</table>
+
+<script type="text/javascript">
+function addUser(){
+	window.location.href="@{/moveToAdd}";
+}
+</script>
+</body>
+</html>
